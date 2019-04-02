@@ -1,6 +1,5 @@
 # general parameters 
 ## directories 
-#TODO change to ./ before submi
 PROJDIR = "/home/dankl/Desktop/MyLocalData/ConferencesAndCourses/SS2019_DeepLearning/Miniproject01/"
 #PROJDIR = "/home/chemophysiker/VirtualEnvironmentsPython/VE002_Python3_4/ML_course/projects/project2/"
 SCRIPTDIR = PROJDIR + "Scripts/"
