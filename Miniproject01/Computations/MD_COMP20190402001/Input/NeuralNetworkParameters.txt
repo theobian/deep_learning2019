@@ -1,0 +1,4 @@
+NN_MODEL 		#_HIDDEN_LAYERS 	LOSS 	LEARNING_RATE 		#_EPOCHS
+regular 		3  			cross_entropy 		1e-4 			150
+convolutional 		2 			MAE				1e-4 			150
+convolutional 		2 			MSE 			1e-4 			150
