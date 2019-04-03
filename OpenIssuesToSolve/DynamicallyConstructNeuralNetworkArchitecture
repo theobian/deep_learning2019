@@ -5,6 +5,10 @@ And possibly here (which seems to be better, as it does not use the Collections 
 https://discuss.pytorch.org/t/how-to-create-mlp-model-with-arbitrary-number-of-hidden-layers/13124/3
 
 
+Here is also a nice explanation between the difference of using nn.ModuleList and nn.Sequential: 
+https://discuss.pytorch.org/t/when-should-i-use-nn-modulelist-and-when-should-i-use-nn-sequential/5463/2
+
+
 
 
 
