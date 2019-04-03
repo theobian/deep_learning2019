@@ -1,0 +1,15 @@
+Look at the following link: seems like this will solve the problem of creating layers using a for-loop: 
+https://discuss.pytorch.org/t/dynamically-add-or-delete-layers/10447/6
+
+And possibly here (which seems to be better, as it does not use the Collections module (which we cannot use since we are restricted to PyTorch):
+https://discuss.pytorch.org/t/how-to-create-mlp-model-with-arbitrary-number-of-hidden-layers/13124/3
+
+
+Here is also a nice explanation between the difference of using nn.ModuleList and nn.Sequential: 
+https://discuss.pytorch.org/t/when-should-i-use-nn-modulelist-and-when-should-i-use-nn-sequential/5463/2
+
+
+
+
+
+
