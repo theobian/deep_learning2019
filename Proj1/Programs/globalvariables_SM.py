@@ -10,7 +10,7 @@ RESULTDIR = PROJDIR + "Results/"
 
 ## praefixes
 COMPPRAEFIX = "COMP"
-AUTHORPRAEFIX = "MD"
+AUTHORPRAEFIX = "SM"
 JOBSTEPPRAEFIX = "JS"
 
 ## Diverse
