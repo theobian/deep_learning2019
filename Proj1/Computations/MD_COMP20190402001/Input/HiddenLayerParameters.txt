@@ -1,4 +1,4 @@
 #_PERCEPTRONS 		ACTIVATION_FUNCTION 		DROPOUT	
-20 					sigmoid 					0.5 			20 					sigmoid 					0.5 			20 					sigmoid 					0.5 			
-20 					sigmoid 					0.5 			20 					sigmoid 					0.5 			
-20 					sigmoid 					0.5 			20 					sigmoid 					0.5 			
+20					Tanh						0.1 			20 					Tanh 					0.5 			20 					ReLU 					0.5 			
+20 					Tanh 					0.2 			20 					ReLU 					0.5 			
+20 					ReLU 					0.5 			20 					Tanh 					0.5 			

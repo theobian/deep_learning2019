@@ -1,0 +1,50 @@
+#===== Implement the following Activation functions:
+https://pytorch.org/docs/stable/nn.html#sigmoid
+    ELU
+    Hardshrink
+    Hardtanh
+    LeakyReLU
+    LogSigmoid
+    PReLU
+    ReLU
+    ReLU6
+    RReLU
+    SELU
+    CELU
+    Sigmoid
+    Softplus
+    Softshrink
+    Softsign
+    Tanh
+    Tanhshrink
+    Threshold
+
+Non-linear activations (other)
+    Softmin
+    Softmax
+    Softmax2d
+    LogSoftmax
+    AdaptiveLogSoftmaxWithLoss
+
+
+#===== Implement the following loss functions 
+https://pytorch.org/docs/stable/nn.html#loss-functions
+    DONE: L1Loss
+    DONE: MSELoss
+    CrossEntropyLoss
+    CTCLoss
+    NLLLoss
+    PoissonNLLLoss
+    KLDivLoss
+    BCELoss
+    BCEWithLogitsLoss
+    MarginRankingLoss
+    HingeEmbeddingLoss
+    MultiLabelMarginLoss
+    SmoothL1Loss
+    SoftMarginLoss
+    MultiLabelSoftMarginLoss
+    CosineEmbeddingLoss
+    MultiMarginLoss
+    TripletMarginLoss
+

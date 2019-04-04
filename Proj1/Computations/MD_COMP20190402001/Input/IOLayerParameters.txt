@@ -1,0 +1,4 @@
+#_INPUT_PERCEPTRONS 		IN_ACTIVATION_FUNCTION 		#_OUTPUT_PERCEPTRONS 		OUT_ACTIVATION_FUNCTION
+324 						ReLU 						2 							Tanh
+314 						ReLU 						2 							Tanh
+304 						ReLU 						2 							ReLU

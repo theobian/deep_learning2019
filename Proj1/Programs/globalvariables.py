@@ -1,7 +1,6 @@
 # general parameters 
 ## directories 
-#TODO change to ./ before submi
-PROJDIR = "/home/dankl/Desktop/MyLocalData/ConferencesAndCourses/SS2019_DeepLearning/Miniproject01/"
+PROJDIR = "/home/dankl/Desktop/MyLocalData/ConferencesAndCourses/SS2019_DeepLearning/Proj1/"
 #PROJDIR = "/home/chemophysiker/VirtualEnvironmentsPython/VE002_Python3_4/ML_course/projects/project2/"
 SCRIPTDIR = PROJDIR + "Scripts/"
 COMPDIR = PROJDIR + "Computations/"
@@ -23,6 +22,10 @@ JOBSTEPFOLDERSPACER = "0"
 COMPDESCR_FILENAME = COMPDIR + AUTHORPRAEFIX + "_ComputationDescriptions.txt"
 
 
+
+
+
+
 # computation specific settings
 ## subdirectories
 IFILESDIR = "Input/"
@@ -32,6 +35,10 @@ OFILESDIR = "Output/"
 GENPARS_FILENAME = "GeneralParameters.txt"
 NNPARS_FILENAME = "NeuralNetworkParameters.txt"
 HIDDENLAYERPARS_FILENAME = "HiddenLayerParameters.txt"
+IOLAYERPARAMETERS_FILENAME = "IOLayerParameters.txt"
+LOADDATAPARS_FILENAME = "LoadDataParameters.txt"
+OFILES_FILENAME = "Ofilenames.txt"
+COMMONOFILES_FILENAME = "CommonOFilenamesForAllJSs.txt"
 
 
 ## column-indices in specific files
@@ -51,6 +58,25 @@ INDEX_NEPOCHS = 4
 INDEX_NPERCEPTRONS = 0
 INDEX_ACTIVFUNC = 1
 INDEX_DROPOUT = 2
+
+
+### IO layer parameters
+INDEX_NINPERCEPTR = 0
+INDEX_INACTIVFUNC = 1
+INDEX_NOUTPERCEPTR = 2
+INDEX_OUTACTIVFUNC = 3
+
+
+### Load Data parameters
+INDEX_SINGLEORPAIRSOFDIGITS = 0
+INDEX_NDATAPOINTS = 1
+
+### Common O-filenames
+INDEX_TRAIN_TEST_ERROR = 0
+
+### O-filenames
+INDEX_MODELPARS = 0
+
 
 
 
