@@ -71,7 +71,7 @@ if not os.path.exists(compdir):
 
 
 # set computation specific directories & files
-curr_ifilesdir = compdir + gv.IFILESDIR + "/"
+curr_ifilesdir = compdir + gv.IFILESDIR
 
 
 genparfile = curr_ifilesdir + gv.GENPARS_FILENAME
@@ -86,63 +86,72 @@ cofilenamesfile = curr_ifilesdir + gv.COMMONOFILES_FILENAME
 
 # Read input parameters 
 ## General Paramters 
-genpars = open(genparfile).read.splitlines()
+genpars = open(genparfile).read()
+genpars = genpars.splitlines()
 genpars = genpars[1].split()
-n_jobsteps = genpars[gv.INDEX_NJOBSTEP]
-n_parsperlayer = genpars[gv.INDEX_NPARSPERLAYER]
+n_jobsteps = int(genpars[gv.INDEX_NJOBSTEP])
+n_parsperlayer = int(genpars[gv.INDEX_NPARSPERLAYER])
 
 ##TODO: Set whether running on CPU or GPU thorugh a device variable: 
 #device = torch.device('cpu')
 # device = torch.device('cuda') # Uncomment this to run on GPU
 
 ## Load Input data parameters 
-ldpars = open(ldparfile).read.splitlines()
+ldpars = open(ldparfile).read()
+ldpars = ldpars.splitlines()
 ldpars = ldpars[1].split()
 sinorpairofdigs = ldpars[gv.INDEX_SINGLEORPAIRSOFDIGITS]
-n_datapts = ldpars[gv.INDEX_NDATAPOINTS]
+n_datapts = int(ldpars[gv.INDEX_NDATAPOINTS])
 
 
 ## Common O-filenames
-cofilenames = open(cofilenamesfile).read.splitlines()
+cofilenames = open(cofilenamesfile).read()
+cofilenames = cofilenames.splitlines()
 cofilenames = cofilenames[1].split()
 trainandtesterrorfilename = compdir + cofilenames[gv.INDEX_TRAIN_TEST_ERROR]
 
 
 ## Neural Network architecture parameters
-nnpars = open(nnparfile).read.splitlines()
+nnpars = open(nnparfile).read()
+nnpars = nnpars.splitlines()
 nnpars = nnpars[1:]
-nrows_nnpars = length(nnpars)
-### check if correct number of lines 
-if nrows_nnpars != n_jobsteps:
-    print("ERROR: The number of rows (" + nrows_nnpars + ") in file " + genparfile + " is not equal the number of jobsteps (" + n_jobsteps + ").")
+nrows_nnpars = len(nnpars)
+### check if correct number of lines
+
+#print(str(nrows_nnpars != n_jobsteps))
+if (nrows_nnpars != n_jobsteps):
+    print("ERROR: The number of rows (" + str(nrows_nnpars) + ") in file " + genparfile + " is not equal the number of jobsteps (" + str(n_jobsteps) + ").")
     sys.exit(2)
 
 ## Hidden layer parameters
-hlpars = open(hlparfile).read.splitlines()
+hlpars = open(hlparfile).read()
+hlpars = hlpars.splitlines()
 hlpars = hlpars[1:]
-nrows_hlpars = length(hlpars)
+nrows_hlpars = len(hlpars)
 ### check if correct number of lines 
 if nrows_hlpars != n_jobsteps:
-    print("ERROR: The number of rows (" + nrows_hlpars + ") in file " + hlparfile + " is not equal the number of jobsteps (" + n_jobsteps + ").")
+    print("ERROR: The number of rows (" + str(nrows_hlpars) + ") in file " + hlparfile + " is not equal the number of jobsteps (" + str(n_jobsteps) + ").")
     sys.exit(2)
 
 ## IO layer parameters
-iolpars = open(iolparfile).read.splitlines()
+iolpars = open(iolparfile).read()
+iolpars = iolpars.splitlines()
 iolpars = iolpars[1:]
-nrows_iolpars = length(iolpars)
+nrows_iolpars = len(iolpars)
 ### check if correct number of lines 
 if nrows_iolpars != n_jobsteps:
-    print("ERROR: The number of rows (" + nrows_iolpars + ") in file " + iolparfile + " is not equal the number of jobsteps (" + n_jobsteps + ").")
+    print("ERROR: The number of rows (" + str(nrows_iolpars) + ") in file " + iolparfile + " is not equal the number of jobsteps (" + str(n_jobsteps) + ").")
     sys.exit(2)
 
 
 ## O-Filenames
-ofilenames = open(ofilenamesfile).read.splitlines()
+ofilenames = open(ofilenamesfile).read()
+ofilenames = ofilenames.splitlines()
 ofilenames = ofilenames[1:]
-nrows_ofilenames = length(ofilenames)
+nrows_ofilenames = len(ofilenames)
 ### check if correct number of lines 
 if nrows_ofilenames != n_jobsteps:
-    print("ERROR: The number of rows (" + nrows_ofilenames + ") in file " + ofilenamesfile + " is not equal the number of jobsteps (" + n_jobsteps + ").")
+    print("ERROR: The number of rows (" + str(nrows_ofilenames) + ") in file " + ofilenamesfile + " is not equal the number of jobsteps (" + str(n_jobsteps) + ").")
     sys.exit(2)
 
 
@@ -180,20 +189,20 @@ for i in range(n_jobsteps):
 
     #### set individual neural network parameters
     curr_nnmodel = nnpars[INDEX_NNMODEL]
-    curr_nhidlay = nnpars[INDEX_HIDDEN_LAYERS]
+    curr_nhidlay = int(nnpars[INDEX_HIDDEN_LAYERS])
     curr_loss = nnpars[INDEX_LOSS]
-    curr_learnrate = nnpars[INDEX_LEARNINGRATE]
-    curr_nepochs = nnpars[INDEX_NEPOCHS]
+    curr_learnrate = float(nnpars[INDEX_LEARNINGRATE])
+    curr_nepochs = int(nnpars[INDEX_NEPOCHS])
 
     #### Print for debugging purposes
     # TODO: Print to Computation.out File for future reference 
     print("############################################################")
     print("The current neural network has the following properties:")
     print("Model type: "  + curr_nnmodel)
-    print("Number of hidden layers: " + curr_nhidlay)
+    print("Number of hidden layers: " + str(curr_nhidlay))
     print("Loss function: " + curr_loss)
-    print("Learning rate: " + curr_learnrate)
-    print("Number of epochs: " + curr_nepochs)
+    print("Learning rate: " + str(curr_learnrate))
+    print("Number of epochs: " + str(curr_nepochs))
 
 
     ### Hidden layer parameters
@@ -206,29 +215,29 @@ for i in range(n_jobsteps):
     curr_dropout = [0.0]*curr_nhidlay
 
     for j in range(curr_nhidlay):
-        curr_nperceptrons[j] = hlpars[j*n_parsperlayer + INDEX_NPERCEPTRONS]
+        curr_nperceptrons[j] = int(hlpars[j*n_parsperlayer + INDEX_NPERCEPTRONS])
         curr_activfunc[j] = hlpars[j*n_parsperlayer + INDEX_ACTIVFUNC]
-        curr_dropout[j] = hlpars[j*n_parsperlayer + INDEX_DROPOUT]
+        curr_dropout[j] = float(hlpars[j*n_parsperlayer + INDEX_DROPOUT])
 
 
     ### IO layer parameters 
     curr_iolpars = iolpars[i].split()
-    curr_ninpercept = curr_iolpars[gv.INDEX_NINPERCEPTR]
+    curr_ninpercept = int(curr_iolpars[gv.INDEX_NINPERCEPTR])
     curr_inactivfunc = curr_iolpars[gv.INDEX_INACTIVFUNC]
-    curr_noutpercept = curr_iolpars[gv.INDEX_NOUTPERCEPTR]
+    curr_noutpercept = int(curr_iolpars[gv.INDEX_NOUTPERCEPTR])
     curr_outactivfunc = curr_iolpars[gv.INDEX_OUTACTIVFUNC]
     print("")
     print("The current neural network layers have the following properties:")
     print("Input layer: ")
-    print("    #perceptrons: "  + curr_ninpercept)
+    print("    #perceptrons: "  + str(curr_ninpercept))
     print("    activation function: "  + curr_inactivfunc)
     print("Output layer: ")
-    print("    #perceptrons: "  + curr_noutpercept)
+    print("    #perceptrons: "  + str(curr_noutpercept))
     print("    activation function: "  + curr_outactivfunc)
     print("Hidden layers: ")
-    print("    #perceptrons: "  + curr_nperceptrons)
+    print("    #perceptrons: "  + str(curr_nperceptrons))
     print("    activation function: "  + curr_activfunc)
-    print("    drop out: "  + curr_dropout)
+    print("    drop out: "  + str(curr_dropout))
 
     ### Set O-filenames
     curr_ofilenames = ofilenames[i].split()
@@ -263,6 +272,6 @@ for i in range(n_jobsteps):
     ###################printToFile(trainandtesterrorfilename, [train_error, test_error] , 'a')
 
     print("")
-    print("Jobstep " + i + " done!")
+    print("Jobstep " + str(i) + " done!")
     print("############################################################")
 

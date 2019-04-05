@@ -37,7 +37,7 @@ NNPARS_FILENAME = "NeuralNetworkParameters.txt"
 HIDDENLAYERPARS_FILENAME = "HiddenLayerParameters.txt"
 IOLAYERPARAMETERS_FILENAME = "IOLayerParameters.txt"
 LOADDATAPARS_FILENAME = "LoadDataParameters.txt"
-OFILES_FILENAME = "Ofilenames.txt"
+OFILES_FILENAME = "OFilenames.txt"
 COMMONOFILES_FILENAME = "CommonOFilenamesForAllJSs.txt"
 
 

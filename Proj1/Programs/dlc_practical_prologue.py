@@ -2,6 +2,7 @@
 import torch
 from torchvision import datasets
 
+import Functional as F
 import argparse
 import os
 
