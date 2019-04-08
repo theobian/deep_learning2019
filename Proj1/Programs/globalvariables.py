@@ -33,11 +33,11 @@ OFILESDIR = "Output/"
 
 ## filenames
 GENPARS_FILENAME = "GeneralParameters.txt"
-NNPARS_FILENAME = "NeuralNetworkParameters.txt"
-HIDDENLAYERPARS_FILENAME = "HiddenLayerParameters.txt"
-IOLAYERPARAMETERS_FILENAME = "IOLayerParameters.txt"
+NNPARS_FILENAME = "NeuralNetworkParameters.csv"
+HIDDENLAYERPARS_FILENAME = "HiddenLayerParameters.csv"
+IOLAYERPARAMETERS_FILENAME = "IOLayerParameters.csv"
 LOADDATAPARS_FILENAME = "LoadDataParameters.txt"
-OFILES_FILENAME = "OFilenames.txt"
+OFILES_FILENAME = "OFilenames.csv"
 COMMONOFILES_FILENAME = "CommonOFilenamesForAllJSs.txt"
 
 
@@ -52,6 +52,7 @@ INDEX_HIDDEN_LAYERS = 1
 INDEX_LOSS = 2
 INDEX_LEARNINGRATE = 3
 INDEX_NEPOCHS = 4
+INDEX_NMINIBATCHSIZE = 5
 
 
 ### Hidden layer parameters
@@ -78,7 +79,11 @@ INDEX_TRAIN_TEST_ERROR = 0
 INDEX_MODELPARS = 0
 
 
-
+## string-separators in specific files
+STRSEP_IOLAYERPARSFILE = ","
+STRSEP_HIDDENLAYERPARSFILE = ","
+STRSEP_NNPARSFILE = ","
+STRSEP_OFILENAMESFILE = ","
 
 ## datatypes
 ### cast tensor to the cuda datatype

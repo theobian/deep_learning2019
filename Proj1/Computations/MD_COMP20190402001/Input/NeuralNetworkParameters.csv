@@ -1,0 +1,4 @@
+NN_MODEL,#_HIDDEN_LAYERS,LOSS,LEARNING_RATE,#_EPOCHS,N_MINIBATCHSIZE
+regular,3,CrossEntropy,0.0001,20,100
+regular,2,CrossEntropy,0.0001,20,100
+regular,2,CrossEntropy,0.0001,20,100
