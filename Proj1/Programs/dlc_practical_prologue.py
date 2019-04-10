@@ -1,6 +1,8 @@
 
 import torch
 from torchvision import datasets
+from torch.autograd import Variable
+from torch.nn import functional as F
 
 import argparse
 import os
@@ -115,12 +117,26 @@ def load_data(cifar = None, one_hot_labels = False, normalize = False, flatten =
 ######################################################################
 
 def mnist_to_pairs(nb, input, target):
-    input = torch.functional.F.avg_pool2d(input, kernel_size = 2)
+    #input = torch.functional.F.avg_pool2d(input, kernel_size = 2)
+    input = F.avg_pool2d(input, kernel_size = 2)
+    #print(input.size())
     a = torch.randperm(input.size(0))
+    
     a = a[:2 * nb].view(nb, 2)
+    #print(a.size())
     input = torch.cat((input[a[:, 0]], input[a[:, 1]]), 1)
-    classes = target[a]
-    target = (classes[:, 0] <= classes[:, 1]).long()
+    
+    classes = torch.stack((target[a[:, 0]], target[a[:, 1]]), 1)
+    #print(classes.size())
+    #classes = target[a]
+    #target = (classes[:, 0] <= classes[:, 1]).long()
+    target = (target[a[:, 0]] <= target[a[:, 1]]).long()
+    
+    #print(input.size())
+    #print(classes.size())
+    #print(target.size())
+
+
     return input, target, classes
 
 ######################################################################
@@ -134,11 +150,11 @@ def generate_pair_sets(nb):
             data_dir = './data'
 
     train_set = datasets.MNIST(data_dir + '/mnist/', train = True, download = True)
-    train_input = train_set.train_data.view(-1, 1, 28, 28).float()
+    train_input = Variable(train_set.train_data.view(-1, 1, 28, 28).float())
     train_target = train_set.train_labels
 
     test_set = datasets.MNIST(data_dir + '/mnist/', train = False, download = True)
-    test_input = test_set.test_data.view(-1, 1, 28, 28).float()
+    test_input = Variable(test_set.test_data.view(-1, 1, 28, 28).float())
     test_target = test_set.test_labels
 
     return mnist_to_pairs(nb, train_input, train_target) + \
