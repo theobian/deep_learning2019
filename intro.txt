@@ -4,17 +4,32 @@ MUST INCLUDE:
 10 + rounds per model architecture with: data and weight initialization randomized and providing standard deviation estimates
 
 PARAMETERS:
-layer number: also on a small range
-learning rate: play around just a bit on a small range
+#layer number: also on a small range
+number of nodes (MLP): Input -> big -> small -> output; Input -> small -> big -> output
+learning rate: play around just a bit on a small range (0.001, 0.01, 0.1, changing with time)
 optimizer: ADAM vs stochastic gradient procedure to update weights, etc... ADAM should be the best
 activation functions: ReLU, leaky ReLU, CeLU (Continuously Differentiable Exponential LU), ELU (Exponential LU) tanh, (softmax for the last linear layer) etc...
 pooling: max pooling vs average pooling vs sum pooling
-dropout: yes/no, random vs based on value
-weight sharing: yes/no/batch size
+stride: 1,2
+#dropout: yes/no, random vs based on value
+weight sharing: yes/no
+batch size
+Kernel size (2x2,3x3,5x5)
+
+FIGURES
+-Confusion matrices for accuracy [0,1]x[0,1]
+-Training loss vs test loss over epochs to show how many epochs we used
+-test Accuracy of every model on same graph
+-table for tested parameters and ranges
+
+N.B Print on the main and another script for graphs.
+
 
 MODELS:
-- MLP: pure
-- CNN: pure
+number of epochs go big to see overfitting, individually for every structure
+- MLP: 2 to 3 hidden layer
+-MLP
+- CNN: 1 Convolutional layer to linear
 - CNN: 'fancy' mix
 - CNN: state-of-the-art
 
