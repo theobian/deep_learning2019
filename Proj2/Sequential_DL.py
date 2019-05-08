@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 class Sequential(Module):
-	def __init__(self, input_size, output_size, init_std, w=None, b=None, activation):
+	def __init__(self, input_size, output_size, init_std, activation, w=None, b=None):
 		super().__init__()
 		"""Initialize the parameters for a multilayer perceptron
 
@@ -55,7 +55,6 @@ class Sequential(Module):
 			param input_layer: the input tensor containing the values of
 			each neuron"""
 
-			x0 = input_layer
 			s = linear.forward(x0)
 			x1 = activation.forward(s)
 
