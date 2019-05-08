@@ -14,7 +14,7 @@ class MLP(Module):
 		self.linear_1 = Sequential_DL.Sequential(2,25,0.1,'tanh')
 		self.linear_2 = Sequential_DL.Sequential(25,25,0.1,'tanh')
 		self.linear_3 = Sequential_DL.Sequential(25,25,0.1,'tanh')
-		self.linear_4 =Sequential_DL.Sequential(25,2,1,'tanh')
+		self.linear_4 = Sequential_DL.Sequential(25,2,1,'tanh')
 
 	def zero_grad(self):
 		"""Reset the derivative, used for each iteration of backprop"""
