@@ -4,7 +4,7 @@ import numpy as np
 
 class Module(object):
 
-	def __init__ (self, instance):
+	def __init__ (self, instance='Unknown'):
 		self.instance = instance #string defining which type of module object is used
 
 
