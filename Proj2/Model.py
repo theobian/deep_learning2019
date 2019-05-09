@@ -6,8 +6,23 @@ import numpy as np
 import torch
 
 
-#  WHY INHERIT FROM MODULE? 
-class MLP(Module):
+
+class Model(Sequential):
+
+	def __init__(self):
+		super().__init__()
+
+	def zero_grad(self):
+		raise NotImplementedError
+	def forward(self):
+		raise NotImplementedError
+	def backward(self):
+		raise NotImplementedError
+
+
+
+#  WHY INHERIT FROM MODULE?
+class MLP(Model):
 	"""Defines a Multi Layer perceptron with three hidden layers, each with 25
 	units and tanh activation"""
 

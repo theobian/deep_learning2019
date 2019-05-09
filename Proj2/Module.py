@@ -29,7 +29,7 @@ class Module(object):
 #==============================================================================#
 #==============================================================================#
 
-class Linear (Module):
+class FullyConnectedLayer (Module):
 	def __init__(self, input_size, output_size, init_std, w=None, b=None):
 		super().__init__()
 

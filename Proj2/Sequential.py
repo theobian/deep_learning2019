@@ -6,7 +6,21 @@ from Module import *
 
 #  redo comments -- especially: not specific to MLP creation: made it so that any thing else can be implemented....
 # also: the activation function and linear thing...
+# we implmenent Sequential as being a combination of a layer + an activation function/ anything else. We define types of layers. These will be called in Model
+# as a sequence of parameters. Is redundant for now. Might always be.
+
 class Sequential(Module):
+	def __init__(self):
+		super().__init__()
+	def forward(self):
+		raise NotImplementedError
+	def backward(self):
+		raise NotImplementedError
+
+
+
+
+class Linear(Sequential):
 	def __init__(self, input_size, output_size, init_std, activation, w=None, b=None):
 		super().__init__()
 		"""Initialize the parameters for a multilayer perceptron
