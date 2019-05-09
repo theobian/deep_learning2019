@@ -2,11 +2,18 @@ from torch import empty
 import math
 import numpy as np
 
+
+
+#  comment in
+
+# don't need to override methods to have them empty.
+
+# not sure we need to inherit from object... we're in Python3
+# if you do, you should probably super
 class Module(object):
 
-	def __init__ (self, instance='Unknown'):
+	def __init__ (self, instance='Undefined'):
 		self.instance = instance #string defining which type of module object is used
-
 
 	def forward(self, *input):
 		raise NotImplementedError
@@ -14,10 +21,13 @@ class Module(object):
 	def backward(self, *gradwrtoutput):
 		raise NotImplementedError
 
+# param is useless here. or should at least return physical location or something...
 	def param(self):
 		return []
 
-
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
 
 class Linear (Module):
 	def __init__(self, input_size, output_size, init_std, w=None, b=None):
@@ -35,10 +45,12 @@ class Linear (Module):
 		self.dl_dw = empty(w.size())
 		self.dl_db = empty(b.size())
 
+
 	def zero_grad(self):
 		"""Reset the derivative, used for each iteration of backprop"""
 		self.dl_dw.zero()
 		self.dl_db.zero()
+
 
 	def forward(self, input_layer):
 		"""Multiplies the entries by their respective weight
@@ -49,9 +61,11 @@ class Linear (Module):
 		#wrong inputs?
 		return self.w.mv(input_layer) + self.b
 
+
 	def param(self):
 		"""Return the parameters with their corrispective derivative"""
 		return [[self.w, self.dl_dw] [self.b, self.dl_db]]
+
 
 	def backward(self, x, dl_ds):
 
@@ -64,10 +78,12 @@ class Linear (Module):
 
 		return dl_dx_antecedent
 
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
 
+class Tanh(Module):
 
-class tanh(Module):
-	
 	def __init__(self):
 		super().__init__()
 
@@ -80,7 +96,7 @@ class tanh(Module):
 
 
 
-class relu(Module):
+class ReLU(Module):
 
 	def __init__(self):
 		super().__init__()
@@ -97,11 +113,18 @@ class relu(Module):
 		gradients = 1. * (x > 0)
 		return gradients * dl_dx
 
-class LossMSE (Module):
+
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
+
+
+class MSELoss (Module):
 	"""Mean Square Error Loss metric to compare output to taget label"""
 
 	def __init__(self):
 		super().__init__()
+
 
 	def forward(self, v, t):
 		"""Compute the forward path inherited by Module mother class
@@ -114,6 +137,8 @@ class LossMSE (Module):
 
 		return (v - t).pow(2).sum()
 
+
+
 	def backward(self, v, t):
 		"""Compute the forward path inherited by Module mother class
 
@@ -124,14 +149,3 @@ class LossMSE (Module):
 		param t: the target"""
 
 		return 2 * (v - t)b
-
-
-
-
-
-
-
-
-
-
-

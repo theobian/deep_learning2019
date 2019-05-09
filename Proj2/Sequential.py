@@ -1,7 +1,11 @@
 from torch import empty
 import math
 import numpy as np
+from Module import *
 
+
+#  redo comments -- especially: not specific to MLP creation: made it so that any thing else can be implemented....
+# also: the activation function and linear thing...
 class Sequential(Module):
 	def __init__(self, input_size, output_size, init_std, activation, w=None, b=None):
 		super().__init__()
@@ -27,28 +31,28 @@ class Sequential(Module):
 		layers
 
 		type activation: string
-		param activation: specifies the activation function, choose between the 
+		param activation: specifies the activation function, choose between the
 		ones described in Module.py"""
 
 		self.linear = Linear(
 			input_size = input_size,
-			output_size = output_size, 
+			output_size = output_size,
 			init_std = init_std,
-			w = w, 
+			w = w,
 			b = b)
 
 		self.activation_selection = activation
 
 		if (activation_selection = 'tanh'):
-			self.activation = tanh()
+			self.activation = Tanh()
 
 		if (activation_selection = 'relu'):
-			self.activation = relu()
+			self.activation = ReLU()
 
 		self.input = input
 
 		def forward(self, input_layer):
-			"""Compute the forward path by concatenating the forward paths of 
+			"""Compute the forward path by concatenating the forward paths of
 			the modules composing the Sequential class
 
 			type input_layer: torch.tensor size(input_size)
@@ -61,7 +65,7 @@ class Sequential(Module):
 			return x0, s, x1
 
 		def backward(self, input_layer, dl_dx1):
-			"""Compute the backward path by concatenating the backward paths of 
+			"""Compute the backward path by concatenating the backward paths of
 			the modules composing the Sequential class
 
 			type input_layer: torch.tensor size(input_size)
@@ -77,8 +81,3 @@ class Sequential(Module):
 			dl_dx = linear.backward(input_layer, dl_ds)
 
 			return dl_ds, dl_dx
-
-
-
-
-
