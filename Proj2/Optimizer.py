@@ -1,24 +1,46 @@
-
-
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
 class Optimizer():
+
 	def __init__(self, *args):
-		pass
+		raise NotImplementedError
 
-	def update_parameters(self, input_parameters):
-		pass
 
-# child class instance should have the model parameters/weights+bias as attributes, and uptdate them when required. Learning Rate and Momentum should be in there!
+	def update(self, *args):
+		raise NotImplementedError
+
+
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
 class SGD(Optimizer):
-	def __init__(self, parameters, learning_rate, *args):
-		pass
 
-	def update_parameters(self):
-		pass
+	def __init__(self, parameters, learning_rate):
+		self.parameters = parameters
+		self.learning_rate = learning_rate
 
 
-class SGD_momentum(Optimizer):
-	def __init__(self, parameters, learning_rate, momentum, *args):
-		pass
+	def update(self):
+		for w in self.parameters:
+			w[0] -= self.learning_rate * w[1]
 
-	def update_parameters(self):
-		pass
+
+
+class SGDMomentum(Optimizer):
+
+	def __init__(self, parameters, learning_rate, gamma=0.9):
+		self.parameters = input_parameters
+		self.learning_rate = learning_rate
+		self.gamma = gamma
+
+
+	def update(self, prev_update):
+		for w in self.parameters:
+			w[0] -= self.learning_rate * w[1]
+			self.learning_rate += (self.gamma * prev_update)
+
+
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#

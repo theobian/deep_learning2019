@@ -7,11 +7,10 @@ import torch
 
 
 
-class Model(Sequential):
+class Model(object):
 
-	def __init__(self):
+	def __init__(self, *args):
 		super().__init__()
-
 	def zero_grad(self):
 		raise NotImplementedError
 	def forward(self):
@@ -21,18 +20,26 @@ class Model(Sequential):
 
 
 
-#  WHY INHERIT FROM MODULE?
 class MLP(Model):
 	"""Defines a Multi Layer perceptron with three hidden layers, each with 25
 	units and tanh activation"""
 
-	def __init__(self):
+	def __init__(self, *args):
 		super().__init__()
-		self.linear_1 = Sequential_DL.Sequential(2,25,0.1,'tanh')
-		self.linear_2 = Sequential_DL.Sequential(25,25,0.1,'tanh')
-		self.linear_3 = Sequential_DL.Sequential(25,25,0.1,'tanh')
-		self.linear_4 = Sequential_DL.Sequential(25,2,1,'tanh')
+		self.parameters = args
+		self.layers = []
 
+		for i, elt in enum (args):
+			self.layers.append(Sequential(elt))
+
+		'''
+		self.layer_1 = Sequential.Sequential(2,25,0.1,'tanh')
+		self.layer_2 = Sequential.Sequential(25,25,0.1,'tanh')
+		self.layer_3 = Sequential.Sequential(25,25,0.1,'tanh')
+		self.layer_4 = Sequential.Sequential(25,2,1,'tanh')
+		'''
+
+		 	
 	def zero_grad(self):
 		"""Reset the derivative, used for each iteration of backprop"""
 		linear_1.zero_grad()

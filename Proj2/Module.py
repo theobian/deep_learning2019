@@ -1,151 +1,130 @@
 from torch import empty
 import math
 import numpy as np
-
-
-
-#  comment in
-
-# don't need to override methods to have them empty.
-
-# not sure we need to inherit from object... we're in Python3
-# if you do, you should probably super
+from torch import FloatTensor
+import torch
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
 class Module(object):
 
-	def __init__ (self, instance='Undefined'):
-		self.instance = instance #string defining which type of module object is used
+	def __init__ (self, instance, *args):
+		self.instance = instance
 
-	def forward(self, *input):
+	def get_parameters(self):
 		raise NotImplementedError
 
-	def backward(self, *gradwrtoutput):
+
+	def forward(self, *args):
 		raise NotImplementedError
 
-# param is useless here. or should at least return physical location or something...
-	def param(self):
-		return []
+
+	def backward(self, *args):
+		raise NotImplementedError
+
 
 #==============================================================================#
 #==============================================================================#
 #==============================================================================#
+class FullyConnectedLayer(Module):
 
-class FullyConnectedLayer (Module):
-	def __init__(self, input_size, output_size, init_std, w=None, b=None):
-		super().__init__()
+	def __init__(self, input_size, output_size, std):
+		super().__init__(self, 'FullyConnectedLayer')
+		self.input_size = input_size
+		self.output_size = output_size
+		self.w = torch.empty(output_size, input_size).normal_(0, std)
+		self.b = torch.empty(output_size, input_size).normal_(0, std)
+		self.dl_dw = torch.empty(self.w.size())
+		self.dl_db = torch.empty(self.b.size())
 
-		#Gives the possibility to initialize w and b with fixed initial values
-		if w is None:
-			w=empty(output_size, input_size).normal(0, init_std)
-		if b is None:
-			b=empty(output_size).normal(0, init_std)
+		# self.w = FloatTensor(output_size, input_size).normal_(0, std)
+		# self.b = FloatTensor(output_size).normal_(0, std)
+		# self.dl_dw = FloatTensor(output_size, input_size).zero_()
+		# self.dl_db = FloatTensor(output_size).zero_()
 
-		self.w = w
-		self.b = b
 
-		self.dl_dw = empty(w.size())
-		self.dl_db = empty(b.size())
+	def get_parameters(self):
+		return [[self.w, self.dl_dw], [self.b, self.dl_db]]
 
 
 	def zero_grad(self):
-		"""Reset the derivative, used for each iteration of backprop"""
-		self.dl_dw.zero()
-		self.dl_db.zero()
+		self.dl_dw.zero_()
+		self.dl_db.zero_()
 
 
-	def forward(self, input_layer):
-		"""Multiplies the entries by their respective weight
-		and add the bias. Standar forward pass for a fully connected
-		linear layer"""
-
-		#TODO maybe add input_layer.view(-1) to reshape it as a precaution for
-		#wrong inputs?
-		return self.w.mv(input_layer) + self.b
-
-
-	def param(self):
-		"""Return the parameters with their corrispective derivative"""
-		return [[self.w, self.dl_dw] [self.b, self.dl_db]]
+	def forward(self, input):
+		print(len(input), len(self.w), len(self.b))
+		return self.w.mv(input.view(-1)) + self.b
 
 
 	def backward(self, x, dl_ds):
-
-		"""Returning the derivative of the previous layer"""
-		dl_dx_antecedent = self.w.t().mv(dl_ds)
-
-		"""Update the derivated weights and biases"""
 		self.dl_dw.add_(dl_ds.view(-1,1).mm(x.view(1,-1)))
-		self.dl_db.add_(dl_ds)i
+		self.dl_db.add_(dl_ds)
+		return self.w.t().mv(dl_ds)
 
-		return dl_dx_antecedent
 
 #==============================================================================#
 #==============================================================================#
 #==============================================================================#
-
 class Tanh(Module):
 
 	def __init__(self):
-		super().__init__()
+		super().__init__(self, 'Tanh')
+
+
+	def get_parameters(self):
+		return []
+
 
 	def forward(self, x):
 		return x.tanh()
 
+
 	def backward(self, x, dl_dx):
-		#TODO CHECK IF NOT MULTIPLICATION WITH SOMETHING ELSE
-		return (4 * (x.exp() + x.mul(-1).exp()).pow(-2))*dl_dx
+		return (4 * (x.exp() + x.mul(-1).exp()).pow(-2)) * dl_dx
 
 
 
 class ReLU(Module):
 
 	def __init__(self):
-		super().__init__()
+		super().__init__(self, 'ReLU')
+
+
+	def get_parameters(self):
+		return []
+
 
 	def forward(self, x):
-		#TODO change with anything but a for loop if possible
-		# return np.maximum(0, data)
-		for i, s in enumerate(x):
-			if s < 0:
-				x[i]=0
-		return x
+		return np.maximum(0, data)
+
 
 	def backward(self, x, dl_dx):
-		gradients = 1. * (x > 0)
-		return gradients * dl_dx
+		gradient = [1. * x[i] for i in range(len(x)) if x>0]
+		return gradient.mul(dl_dx)
 
 
 #==============================================================================#
 #==============================================================================#
 #==============================================================================#
-
-
-class MSELoss (Module):
-	"""Mean Square Error Loss metric to compare output to taget label"""
+class MSELoss(Module):
 
 	def __init__(self):
-		super().__init__()
+		super().__init__(self, 'MSELoss')
+
+
+	def get_parameters(self):
+		return []
 
 
 	def forward(self, v, t):
-		"""Compute the forward path inherited by Module mother class
-
-		type v: torch.tensor
-		param v: the output of the neural network
-
-		type t: torch.tensor
-		param t: the target"""
-
 		return (v - t).pow(2).sum()
 
 
-
 	def backward(self, v, t):
-		"""Compute the forward path inherited by Module mother class
+		return 2 * (v - t)
 
-		type v: torch.tensor
-		param v: the output of the neural network
 
-		type t: torch.tensor
-		param t: the target"""
-
-		return 2 * (v - t)b
+#==============================================================================#
+#==============================================================================#
+#==============================================================================#
