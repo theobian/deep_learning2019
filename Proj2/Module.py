@@ -1,130 +1,91 @@
-from torch import empty
 import math
-import numpy as np
-from torch import FloatTensor
 import torch
-#==============================================================================#
-#==============================================================================#
-#==============================================================================#
-class Module(object):
-
-	def __init__ (self, instance, *args):
-		self.instance = instance
-
-	def get_parameters(self):
-		raise NotImplementedError
+from torch import FloatTensor
+from torch import LongTensor
+import numpy as np
 
 
-	def forward(self, *args):
-		raise NotImplementedError
+class Module():
+    def __init__(self, *args):
+        raise NotImplementedError
 
+    def get_parameters(self):
+        return []
 
-	def backward(self, *args):
-		raise NotImplementedError
+    def forward(self, *args):
+        raise NotImplementedError
 
+    def backward(self, *args):
+        raise NotImplementedError
 
-#==============================================================================#
-#==============================================================================#
-#==============================================================================#
-class FullyConnectedLayer(Module):
-
-	def __init__(self, input_size, output_size, std):
-		super().__init__(self, 'FullyConnectedLayer')
-		self.input_size = input_size
-		self.output_size = output_size
-		self.w = torch.empty(output_size, input_size).normal_(0, std)
-		self.b = torch.empty(output_size, input_size).normal_(0, std)
-		self.dl_dw = torch.empty(self.w.size())
-		self.dl_db = torch.empty(self.b.size())
-
-		# self.w = FloatTensor(output_size, input_size).normal_(0, std)
-		# self.b = FloatTensor(output_size).normal_(0, std)
-		# self.dl_dw = FloatTensor(output_size, input_size).zero_()
-		# self.dl_db = FloatTensor(output_size).zero_()
-
-
-	def get_parameters(self):
-		return [[self.w, self.dl_dw], [self.b, self.dl_db]]
-
-
-	def zero_grad(self):
-		self.dl_dw.zero_()
-		self.dl_db.zero_()
-
-
-	def forward(self, input):
-		print(len(input), len(self.w), len(self.b))
-		return self.w.mv(input.view(-1)) + self.b
-
-
-	def backward(self, x, dl_ds):
-		self.dl_dw.add_(dl_ds.view(-1,1).mm(x.view(1,-1)))
-		self.dl_db.add_(dl_ds)
-		return self.w.t().mv(dl_ds)
-
-
-#==============================================================================#
-#==============================================================================#
-#==============================================================================#
-class Tanh(Module):
-
-	def __init__(self):
-		super().__init__(self, 'Tanh')
-
-
-	def get_parameters(self):
-		return []
-
-
-	def forward(self, x):
-		return x.tanh()
-
-
-	def backward(self, x, dl_dx):
-		return (4 * (x.exp() + x.mul(-1).exp()).pow(-2)) * dl_dx
-
+    def zero_grad(self):
+        pass
 
 
 class ReLU(Module):
+    def __init__(self):
+        self.id ='Relu'
 
-	def __init__(self):
-		super().__init__(self, 'ReLU')
+    def forward(self, x):
+        return np.maximum(0, x)
 
-
-	def get_parameters(self):
-		return []
-
-
-	def forward(self, x):
-		return np.maximum(0, data)
-
-
-	def backward(self, x, dl_dx):
-		gradient = [1. * x[i] for i in range(len(x)) if x>0]
-		return gradient.mul(dl_dx)
+    def backward(self, x, dl_dx):
+        mask = (x > 0).float()
+        dw = torch.mul(torch.mul(x,mask).view(-1,1),dl_dx)
+        return dw
 
 
-#==============================================================================#
-#==============================================================================#
-#==============================================================================#
+class Tanh(Module):
+    def __init__(self):
+        self.id = 'Tanh'
+
+    def forward(self, x):
+        return x.tanh()
+
+    def backward(self, x, dl_dx):
+        return 4 * (x.view(-1,1).exp() + x.view(-1,1).mul(-1).exp()).pow(-2) * dl_dx
+
+
 class MSELoss(Module):
+    def __init__(self):
+        self.id = 'MSELoss'
 
-	def __init__(self):
-		super().__init__(self, 'MSELoss')
+    def forward(self, v, t):
+        return (v.view(2,1) - t).pow(2).sum()
 
-
-	def get_parameters(self):
-		return []
-
-
-	def forward(self, v, t):
-		return (v - t).pow(2).sum()
+    def backward(self, v, t):
+        return 2 * (v.view(2,1) - t)
 
 
-	def backward(self, v, t):
-		return 2 * (v - t)
+class FullyConnectedLayer(Module):
+
+    def __init__(self, n_in, n_out, std):
+        self.id = 'Fully Connected Layer'
+
+        self.w = FloatTensor(n_out, n_in).normal_(std)
+        self.b = FloatTensor(n_out).normal_(std)
+
+        self.dw = FloatTensor(n_out,n_in).zero_()
+        self.db = FloatTensor(n_out).zero_()
+
+        self.parameters = [[self.w, self.dw], [self.b, self.db]]
+
+    def get_parameters(self):
+        return self.parameters
 
 
-#==============================================================================#
-#==============================================================================#
-#==============================================================================#
+    def forward(self,x):
+        s = self.w.mv(x.view(-1)) + self.b
+        return s
+
+
+    def backward(self, x, dl_ds):
+        self.dw.add_(dl_ds.view(-1, 1).mm(x.view(1, -1)))
+        self.db.add_(dl_ds.view(-1))
+        dx_previous = self.w.t().mm(dl_ds)
+        return dx_previous
+
+
+    def zero_grad(self):
+            self.dw.zero_()
+            self.db.zero_()
