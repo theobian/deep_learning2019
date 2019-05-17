@@ -109,7 +109,7 @@ def train_model_no_batch(model, train_input, train_target, loss_criterion, optim
             grad, grad_err = model.backward(output, loss_criterion.backward(output, train_target.narrow(0, s, 1)))
             optimizer.step()
             model.optimize(eta)
-            losses.append(sum_loss)
+        losses.append(sum_loss)
         if(e%5 == 0 or e == 0 or e == epochs): print('epoch', e,'loss', sum_loss)
     weights = model.param()
     return losses, weights
@@ -131,7 +131,6 @@ def train_model_batch(model, train_input, train_target, loss_criterion, optimize
             # should implement batching within batching and update the optimizer only after a full batch
             optimizer.step()
             losses.append(sum_loss)
-        weights = model.param()
         print('epoch',e, 'loss', sum_loss)
     return losses, weights
 
@@ -148,15 +147,15 @@ def test_model_no_batch(model, test_input, test_target, loss_criterion):
             ix.append(test_input.narrow(0, s, 1)[0][0].item())
             iy.append(test_input.narrow(0, s, 1)[0][1].item())
             l.append(0)
-            print('err', 'l=0', test_target.narrow(0,s,1).item())
+            # print('err', 'l=0', test_target.narrow(0,s,1).item())
         else:
             n_correct += 1
             cx.append(test_input.narrow(0, s, 1)[0][0].item())
             cy.append(test_input.narrow(0, s, 1)[0][1].item())
             l.append(1)
-            print('cor', 'l=1', test_target.narrow(0,s,1).item())
-    print('errors', n_errors)
-    print('correct', n_correct)
+            # print('cor', 'l=1', test_target.narrow(0,s,1).item())
+    # print('errors', n_errors)
+    # print('correct', n_correct)
     return n_errors, n_correct, ix, iy, cx, cy, l
 
 ################################################################################
@@ -170,23 +169,23 @@ def test_model_wip(model, test_input, test_target, loss_criterion):
         t = test_target.narrow(0, s, 1).item()
         i = test_input.narrow(0, s, 1)
         p = np.argmax(output)
-        print(t)
-        print(p)
+        # print(t)
+        # print(p)
         if(t == p):
             n_correct += 1
             cx.append(i[0][0].item())
             cy.append(i[0][1].item())
             l.append(1)
-            print('cor \n')
+            # print('cor \n')
         else:
             n_errors += 1
             ix.append(i[0][0].item())
             iy.append(i[0][1].item())
             l.append(0)
-            print('mis \n')
+            # print('mis \n')
 
-    print('errors', n_errors)
-    print('correct', n_correct)
+    # print('errors', n_errors)
+    # print('correct', n_correct)
     return n_errors, n_correct, ix, iy, cx, cy, l
 
 ################################################################################

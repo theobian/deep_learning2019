@@ -58,7 +58,7 @@ class Tanh(Module):
 
     def backward(self, x, dl_dx):
         return 4 * (x.view(-1,1).exp() + x.view(-1,1).mul(-1).exp()).pow(-2) * dl_dx
-        # 4 * (x.exp() + x.mul(-1).exp()).pow(-2)
+        
     def param(self):
         return None
 
@@ -72,13 +72,10 @@ class MSELoss(Module):
 
     def forward(self, v, t):
         return (v.view(2,1) - t).pow(2).sum()
-        # return (v.view(-1,1) - t).pow(2).sum()
-        # return (v - t).pow(2).sum()
 
     def backward(self, v, t):
         return 2 * (v.view(2,1) - t)
-        # return 2 * (v - t)
-
+        
     def param(self):
         return None
 
@@ -114,10 +111,6 @@ class Linear(Module):
 
     def param(self):
         return [[self.w, self.dw], [self.b, self.db]]
-
-    def optimize(self, eta):
-        self.w -= eta * self.dw
-        self.b -= eta * self.db
 
 ################################################################################
 ################################################################################

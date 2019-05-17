@@ -35,12 +35,10 @@ class Sequential():
             element.zero_grad()
 
     def param(self):
-        #should probably APPEND
         parameters = []
         for elt in self.elements:
             if elt.param() != None:
                 parameters += elt.param()
-                # parameters.append(elt.param())
         return parameters
 
     def optimize(self, eta):
