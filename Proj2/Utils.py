@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 ################################################################################
 ################################################################################
 ################################################################################
-def data_gen(nb):
-    input = FloatTensor(nb, 2).uniform_(0, 1)
-    target = FloatTensor(nb, 2).uniform_(0, 1)
+def data_gen(n):
+    input = FloatTensor(n, 2).uniform_(0, 1)
+    target = FloatTensor(n, 2).uniform_(0, 1)
     target = input.pow(2).sum(1).sub(1 / (2*math.pi)).sign().add(1).div(2).float()
     # print(target.size())
     return input, target
@@ -239,6 +239,17 @@ def dummy_plot_results(ix, iy, cx, cy):
     plt.title('Results')
     plt.show()
     fig.savefig('Results.png')
+
+################################################################################
+
+def write_to_csv(text, id):
+
+    with open('Output/test_{}.csv'.format(id), mode = 'w') as to_csv:
+        print(len(text))
+        for i in range(len(text)):
+            to_csv.write(text[i])
+            to_csv.write('\n')
+
 
 ################################################################################
 ################################################################################
