@@ -1,28 +1,39 @@
+'''
+Utils
+'''
 import math
 import torch
 from torch import FloatTensor
 from torch import LongTensor
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+
+
 
 ################################################################################
 ################################################################################
 ################################################################################
+'''
+input: number of data points to generate
+output: binary input and corresponding class according to the following rule: 
+target is 1 if point pair is within circle of radius R = sqrt(1/2pi)
+''' 
 def data_gen(n):
     input = FloatTensor(n, 2).uniform_(0, 1)
     target = FloatTensor(n, 2).uniform_(0, 1)
     target = input.pow(2).sum(1).sub(1 / (2*math.pi)).sign().add(1).div(2).float()
-    # print(target.size())
     return input, target
 
-################################################################################
-def dummy_data_gen(nb):
-    input = FloatTensor(nb, 2).uniform_(-1, 1)
-    target = FloatTensor(nb, 2).uniform_(-1, 1)
-    target = input.sum(1).sign().add(1).div(2).float()
-    return input, target
+
 
 ################################################################################
+'''
+input: input and class to be plotted
+output: none
+plots the binary data as two different classes according to their labeled class
+saves the figure
+'''
 def data_plot(input, target):
     cmap = []
     for i in range(len(target)):
@@ -40,64 +51,21 @@ def data_plot(input, target):
     plt.show()
     fig.savefig('Dataset.png')
 
-################################################################################
-def dummy_data_plot(input, target):
-    cmap = []
-    for i in range(len(target)):
-        if(target[i]):
-            cmap.append('blue')
-        else:
-            cmap.append('red')
-    fig, ax = plt.subplots()
-    plt.scatter(input[:,0], input[:,1], c = cmap)
-    x = np.linspace(-1, 1, 100)
-    y = -x
-    plt.plot(x, y, c = 'black')
-    plt.ylim(-1, 1);
-    plt.xlim(-1, 1);
-    plt.title('Dataset')
-    plt.show()
-    fig.savefig('Dataset.png')
-
-################################################################################
-def data_norm(input, target):
-    mean, std = input.mean(),input.std()
-    input.sub_(mean).div_(std)
-    input.sub_(mean).div_(std)
-    #  can't use Variable because it keeps track of the gradient EVEN THOUGh it is now deprecated.
-    # train_input, train_target = Variable(input), Variable(target)
-    return input, target
-
-################################################################################
-def data_transform(input):
-    # specific to THE DATA WE ARE USING
-    transform = []
-    transform.append(input[:, 0].reshape((-1, 1)))
-    transform.append(input[:, 1].reshape((-1, 1)))
-    t_data = transform[0].pow(2) + transform[1].pow(2)
-    return t_data, transform
-
-################################################################################
-def data_reshape(input):
-    X = input
-    # adding a new dimension to X
-    X1 = X[:, 0].reshape((-1, 1))
-    X2 = X[:, 1].reshape((-1, 1))
-    X3 = (X1**2 + X2**2)
-    X = np.hstack((X, X3))
-
-    # visualizing data in higher dimension
-    # fig = plt.figure()
-    # axes = fig.add_subplot(111, projection = '3d')
-    # axes.scatter(X1, X2, X1**2 + X2**2, c = Y, depthshade = True)
-    # plt.show()
-    return X
 
 
 ################################################################################
 ################################################################################
 ################################################################################
-def train_model_no_batch(model, train_input, train_target, loss_criterion, optimizer, eta, epochs):
+'''
+input: model to be trained; binary data and corresponding class; loss and optimization criterions for training, learning rate, epochs, and verbose parameter
+output: total losses for each epoch, and model parameters (weights, biases and corresponding gradients) after the last epoch training
+this is SGD type update;
+iteratively calls: the model's forward pass, then the loss's foward pass for a single binary data point and class
+then adds the running loss to the total loss
+then set all gradients to zero before computing the model's backward pass for a single binary data point and the loss function's gradient
+then updates the parameter weights through the optimizer.
+'''
+def train(model, train_input, train_target, loss_criterion, optimizer, eta, epochs, verbose):
     losses = []
     for e in range(epochs):
         sum_loss = 0
@@ -108,60 +76,52 @@ def train_model_no_batch(model, train_input, train_target, loss_criterion, optim
             model.zero_grad()
             grad, grad_err = model.backward(output, loss_criterion.backward(output, train_target.narrow(0, s, 1)))
             optimizer.step()
-            model.optimize(eta)
         losses.append(sum_loss)
-        if(e%5 == 0 or e == 0 or e == epochs): print('epoch', e,'loss', sum_loss)
+        if((e%5 == 0 or e == 0 or e == epochs) and verbose):
+            print('epoch', e,'loss', sum_loss)
     weights = model.param()
     return losses, weights
 
 
-################################################################################
-def train_model_batch(model, train_input, train_target, loss_criterion, optimizer, epochs, mini_batch_size):
-    losses = []
-    weights = []
-    for e in range(epochs):
-        sum_loss = 0
-        for b in range(0, train_input.size(0), mini_batch_size):
-            output = model.forward((train_input.narrow(0, b, mini_batch_size)))
-            loss = loss_criterion.forward((output, train_target.narrow(0, b, mini_batch_size)))
-            model.zero_grad()
-            grad, grad_err = model.backward(loss_criterion.backward(output, train_target.narrow(0, b, mini_batch_size)))
-            sum_loss += loss.item()
-            '''needs to access the model parameters themselves: the WEIGHTS!!!!'''
-            # should implement batching within batching and update the optimizer only after a full batch
-            optimizer.step()
-            losses.append(sum_loss)
-        print('epoch',e, 'loss', sum_loss)
-    return losses, weights
 
 ################################################################################
-def test_model_no_batch(model, test_input, test_target, loss_criterion):
-    n_errors = 0
-    n_correct = 0
-    cx, cy, ix, iy = [], [], [], []
-    l = []
-    for s in range(len(test_input)):
-        output = model.forward(test_input.narrow(0, s, 1))
-        if(test_target.narrow(0, s, 1).item() != np.argmax(output)):
-            n_errors += 1
-            ix.append(test_input.narrow(0, s, 1)[0][0].item())
-            iy.append(test_input.narrow(0, s, 1)[0][1].item())
-            l.append(0)
-            # print('err', 'l=0', test_target.narrow(0,s,1).item())
-        else:
-            n_correct += 1
-            cx.append(test_input.narrow(0, s, 1)[0][0].item())
-            cy.append(test_input.narrow(0, s, 1)[0][1].item())
-            l.append(1)
-            # print('cor', 'l=1', test_target.narrow(0,s,1).item())
-    # print('errors', n_errors)
-    # print('correct', n_correct)
-    return n_errors, n_correct, ix, iy, cx, cy, l
+# def test_model_no_batch(model, test_input, test_target, loss_criterion):
+#     n_errors = 0
+#     n_correct = 0
+#     cx, cy, ix, iy = [], [], [], []
+#     l = []
+#     for s in range(len(test_input)):
+#         output = model.forward(test_input.narrow(0, s, 1))
+#         if(test_target.narrow(0, s, 1).item() != np.argmax(output)):
+#             n_errors += 1
+#             ix.append(test_input.narrow(0, s, 1)[0][0].item())
+#             iy.append(test_input.narrow(0, s, 1)[0][1].item())
+#             l.append(0)
+#             # print('err', 'l=0', test_target.narrow(0,s,1).item())
+#         else:
+#             n_correct += 1
+#             cx.append(test_input.narrow(0, s, 1)[0][0].item())
+#             cy.append(test_input.narrow(0, s, 1)[0][1].item())
+#             l.append(1)
+#             # print('cor', 'l=1', test_target.narrow(0,s,1).item())
+#     # print('errors', n_errors)
+#     # print('correct', n_correct)
+#     return n_errors, ix, iy, cx, cy, l
+
+
+
 
 ################################################################################
-def test_model_wip(model, test_input, test_target, loss_criterion):
+'''
+input: model to be trained; binary data and corresponding class; loss criterion for testing, and verbose parameter
+output: number of misclassified points, coordinates for the vector of misclassified as well as for classified points, and a label vector of the same size as the input data
+for each sample within the test set: computes the model forward to precict label as a probability of being one class or the other
+the most likely prediction (index corresponding to the max value of the last layer's output) is compared to the actual label 
+errors, points, and labels that were misclassifed are logged accordingly
+the l parameter returned makes it easier to keep track of which labels were misclassified
+'''
+def eval(model, test_input, test_target, loss_criterion, verbose):
     n_errors = 0
-    n_correct = 0
     cx, cy, ix, iy = [], [], [], []
     l = []
     for s in range(len(test_input)):
@@ -169,49 +129,27 @@ def test_model_wip(model, test_input, test_target, loss_criterion):
         t = test_target.narrow(0, s, 1).item()
         i = test_input.narrow(0, s, 1)
         p = np.argmax(output)
-        # print(t)
-        # print(p)
         if(t == p):
             n_correct += 1
             cx.append(i[0][0].item())
             cy.append(i[0][1].item())
             l.append(1)
-            # print('cor \n')
         else:
             n_errors += 1
             ix.append(i[0][0].item())
             iy.append(i[0][1].item())
             l.append(0)
-            # print('mis \n')
+    return n_errors, ix, iy, cx, cy, l
 
-    # print('errors', n_errors)
-    # print('correct', n_correct)
-    return n_errors, n_correct, ix, iy, cx, cy, l
-
-################################################################################
-def test_model_batch(model, test_input, test_target, loss_criterion, mini_batch_size):
-    n_errors = 0
-    predicted = np.zeros(2, len(test_target), float)
-    for b in range(0, test_input.size(0), mini_batch_size):
-        output = model.forward(test_input.narrow(0, b, mini_batch_size))
-        for s in range(mini_batch_size):
-            if test_target[b+s] != np.argmax(output[s]):
-                n_errors += 1
-                predicted[0].append(test_input[b+s], output[s])
-            else:
-                predicted[1].append(test_input[b+s], output[s])
-    print(n_errors)
-    print(n_correct)
-    return n_errors, predicted
-
-################################################################################
-def evaluation():
-    # loop over epochs to see if the loss goes down
-    # loop over learning rates to see if out-of-range lr make No sense as they should
-    pass
 
 
 ################################################################################
+'''
+input: incorrectly labeled and correctl labeled point coordinates (for binary data)
+output: none
+plots the data points, with two classes -- not according to the true label (which can be determined with the circle boundary)),
+but according to the classification truth
+'''
 def plot_results(ix, iy, cx, cy):
     fig, ax = plt.subplots()
     plt.scatter(ix, iy, s = 1, c = 'red', label = 'Misclassified')
@@ -225,30 +163,21 @@ def plot_results(ix, iy, cx, cy):
     plt.show()
     fig.savefig('Results.png')
 
-################################################################################
-def dummy_plot_results(ix, iy, cx, cy):
-    fig, ax = plt.subplots()
-    plt.scatter(ix, iy, s = 1, c = 'red', label = 'Misclassified')
-    plt.scatter(cx, cy, s = 1, c = 'green', label = 'Correctly Classified')
-    x = np.linspace(-1, 1, 100)
-    y = -x
-    plt.plot(x, y, c = 'black')
-    plt.ylim(-1, 1);
-    plt.xlim(-1, 1);
-    plt.legend(loc = 1)
-    plt.title('Results')
-    plt.show()
-    fig.savefig('Results.png')
+
 
 ################################################################################
+'''
+input: text to be outputted, file idenifier for easy saving
+output: none
+allows saving model results to csv format file
+'''
+def write_to_csv(text, file_id):
 
-def write_to_csv(text, id):
-
-    with open('Output/test_{}.csv'.format(id), mode = 'w') as to_csv:
-        print(len(text))
+    with open('Output/test_{}.csv'.format(file_id), mode = 'w') as to_csv:
         for i in range(len(text)):
             to_csv.write(text[i])
             to_csv.write('\n')
+
 
 
 ################################################################################

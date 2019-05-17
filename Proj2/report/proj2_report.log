@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.23)  17 MAY 2019 15:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.23)  17 MAY 2019 18:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -727,12 +727,12 @@ Package caption Info: End \AtBeginDocument code.
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=50.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=57.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -779,56 +779,48 @@ Package pdftex.def Info: src/epfl_nonofficial_logo.png used on input line 74.
 File: src/architecture_org.png Graphic file (type png)
 
 <use src/architecture_org.png>
-Package pdftex.def Info: src/architecture_org.png used on input line 88.
+Package pdftex.def Info: src/architecture_org.png used on input line 89.
 (pdftex.def)             Requested size: 245.71364pt x 317.98236pt.
 
-Overfull \hbox (8.8652pt too wide) in paragraph at lines 88--89
+Overfull \hbox (8.8652pt too wide) in paragraph at lines 89--90
  [][] 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 94.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 97.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 94.
-
-Overfull \hbox (2.6338pt too wide) in paragraph at lines 94--98
-\T1/cmr/m/n/10.95 (-20) Lay-ers, Ac-ti-va-tion Func-tions, and Losses. The
- []
-
-
-Overfull \hbox (1.22188pt too wide) in paragraph at lines 94--98
-\T1/cmr/m/n/10.95 (-20) chil-dren classes over-ride the par-ent class meth-
- []
-
-[1
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 97.
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./src/epfl_nonofficial_log
-o.png (PNG copy)> <./src/architecture_org.png>] [2] [3] (./proj2_report.aux) ) 
+o.png (PNG copy)> <./src/architecture_org.png>] [2] [3
+
+] (./proj2_report.aux) ) 
 Here is how much of TeX's memory you used:
- 16080 strings out of 493029
- 313120 string characters out of 6136233
- 371306 words of memory out of 5000000
- 19334 multiletter control sequences out of 15000+600000
- 19599 words of font info for 102 fonts, out of 8000000 for 9000
+ 16104 strings out of 493029
+ 313459 string characters out of 6136233
+ 373221 words of memory out of 5000000
+ 19357 multiletter control sequences out of 15000+600000
+ 20970 words of font info for 108 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,8n,42p,10363b,564s stack positions out of 5000i,500n,10000p,200000b,80000s
-{
-/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.
-pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texm
-f/fonts/type1/public/cm-super/sfcc1095.pfb></usr/share/texmf/fonts/type1/public
-/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.p
-fb>
-Output written on proj2_report.pdf (3 pages, 235210 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.
+enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm1000.pfb>
+Output written on proj2_report.pdf (3 pages, 215264 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 63 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21515 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 26635 words of extra memory for PDF output out of 29859 (max. 10000000)
 
