@@ -147,94 +147,128 @@ def main():
 
 
 ################################################################################    
-    torch.set_grad_enabled(False)
+	torch.set_grad_enabled(False)
 
-    verbose, plot, save = False, False, True
-
-
-################################################################################  
-    model_no = 2    
-    n_train, n_test = 1000, 1000
-    std = 0.1
-    batch_size = 20
-    epochs = 100
-    file_id = ['model2_eta_1e-4', 'model2_eta_1e-3', 'model2_eta_1e-2', 'model2_eta_1e-1']
-    eta = [1e-4, 1e-3, 1e-2, 1e-1]
-    for i in range(len(file_id)):
-        test(model_no, n_train, n_test, std, eta[i], batch_size, epochs, verbose, plot, save, file_id[i])
+	verbose, plot, save = False, False, True
 
 
-################################################################################
-    model_no = [1, 2, 3, 4, 5]
-    n_train, n_test = 1000, 1000
-    std = 0.1
-    batch_size = 20
-    epochs = 100
-    file_id = ['model1', 'model2', 'model3', 'model4', 'model5']
-    eta = 1e-1
-    for i in range(len(file_id)):
-        test(model_no[i], n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id[i])
+	# ################################################################################  
+	# model_no = 2    
+	# n_train, n_test = 1000, 1000
+	# std = 0.1
+	# batch_size = 20
+	# epochs = 100
+	# file_id = ['model2_eta_1e-4', 'model2_eta_1e-3', 'model2_eta_1e-2', 'model2_eta_1e-1']
+	# eta = [1e-4, 1e-3, 1e-2, 1e-1]
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train, n_test, std, eta[i], batch_size, epochs, verbose, plot, save, file_id[i])
 
 
-################################################################################
-    model_no = 2
-    n_train, n_test = 1000, 1000
-    std = 0.1
-    batch_size = 20
-    epochs = [10, 50, 100, 300]
-    file_id = ['model2_e_10', 'model2_e_50', 'model2_e_100', 'model2_e_300']
-    eta = 1e-1
-    for i in range(len(file_id)):
-        test(model_no, n_train, n_test, std, eta, batch_size, epochs[i], verbose, plot, save, file_id[i])
+	# ################################################################################
+	# model_no = [1, 2, 3, 4, 5]
+	# n_train, n_test = 1000, 1000
+	# std = 0.1
+	# batch_size = 20
+	# epochs = 100
+	# file_id = ['model1', 'model2', 'model3', 'model4', 'model5']
+	# eta = 1e-1
+	# for i in range(len(file_id)):
+	# 	test(model_no[i], n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id[i])
 
 
-################################################################################
-    model_no = 2
-    n_train, n_test = 1000, 1000
-    std = [1e-2, 1e-1, 1]
-    batch_size = 20
-    epochs = 100
-    file_id = ['model2_std_1e-2', 'model2_std_1e-1', 'model2_std_1']
-    eta = 1e-1
-    for i in range(len(file_id)):
-        test(model_no, n_train, n_test, std[i], eta, batch_size, epochs, verbose, plot, save, file_id[i])
+	# ################################################################################
+	# model_no = 2
+	# n_train, n_test = 1000, 1000
+	# std = 0.1
+	# batch_size = 20
+	# epochs = [10, 50, 100, 300]
+	# file_id = ['model2_e_10', 'model2_e_50', 'model2_e_100', 'model2_e_300']
+	# eta = 1e-1
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train, n_test, std, eta, batch_size, epochs[i], verbose, plot, save, file_id[i])
 
 
-################################################################################
-    model_no = 5
-    n_train, n_test = 1000, 1000
-    std = 1e-1
-    batch_size = 20
-    epochs = 100
-    file_id = 'model5'
-    eta = 1e-1
-    test(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id)
+	# ################################################################################
+	# model_no = 2
+	# n_train, n_test = 1000, 1000
+	# std = [1e-2, 1e-1, 1]
+	# batch_size = 20
+	# epochs = 100
+	# file_id = ['model2_std_1e-2', 'model2_std_1e-1', 'model2_std_1']
+	# eta = 1e-1
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train, n_test, std[i], eta, batch_size, epochs, verbose, plot, save, file_id[i])
 
 
-################################################################################
-    model_no = 2
-    n_train, n_test = 10000, 1000
-    std = 1e-1
-    batch_size = 20
-    epochs = 50
-    file_id = 'model2_optimal'
-    eta = 1e-1
-    test(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id)
+	# ################################################################################
+	# model_no = 5
+	# n_train, n_test = 1000, 1000
+	# std = 1e-1
+	# batch_size = 20
+	# epochs = 100
+	# file_id = 'model5'
+	# eta = 1e-1
+	# fest(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id)
 
 
-################################################################################
-    model_no = 2
-    n_train, n_test = 1000, 1000
-    std = 1e-1
-    batch_size = 20
-    epochs = 50
-    file_id = 'model2_submission'
-    eta = 1e-1
-    test(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id)       
+	# ################################################################################
+	# model_no = 2
+	# n_train, n_test = 10000, 1000
+	# std = 1e-1
+	# batch_size = 20
+	# epochs = 50
+	# file_id = 'model2_optimal'
+	# eta = 1e-1
+	# test(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id)
 
 
-    pass
+	# ###############################################################################
+	# model_no = 2
+	# n_train, n_test = 1000, 1000
+	# std = 1e-1
+	# batch_size = 20
+	# epochs = [10, 50, 100, 300, 500]
+	# file_id = ['model2_sub_e_10', 'model2_sub_e_50', 'model2_sub_e_100', 'model2_sub_e_1000', 'model2_sub_e_10000']
+	# eta = 1e-1
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train, n_test, std, eta, batch_size, epochs[i], verbose, plot, save, file_id[i])       
 
+
+	# ##############################################################################
+	# model_no = 2
+	# n_train, n_test = [10, 100, 1000, 10000], [10, 100, 1000, 10000]
+	# std = 1e-1
+	# batch_size = 20
+	# epochs = 50
+	# file_id = ['model2_sub_n_10', 'model2_sub_n_100', 'model2_sub_n_1000', 'model2_sub_n_10000']
+	# eta = 1e-1
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train[i], n_test[i], std, eta, batch_size, epochs, verbose, plot, save, file_id[i])       
+
+
+	# ###############################################################################
+	# model_no = 2
+	# n_train, n_test = 1000, 1000
+	# std = 1e-1
+	# batch_size = 20
+	# epochs = 50
+	# file_id = ['model2_submission_1', 'model2_submission_2', 'model2_submission_3', 'model2_submission_4', 'model2_submission_5']
+	# eta = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
+	# for i in range(len(file_id)):
+	# 	test(model_no, n_train, n_test, std, eta[i], batch_size, epochs, verbose, plot, save, file_id[i])
+
+
+	################################################################################
+	model_no = 2
+	n_train, n_test = 1000, 1000
+	std = 1e-1
+	batch_size = 20
+	epochs = 20
+	file_id = ['model2_optsub_1', 'model2_optsub_2', 'model2_optsub_3', 'model2_optsub_4', 'model2_optsub_5',
+			'model2_optsub_6', 'model2_optsub_7', 'model2_optsub_8', 'model2_optsub_9', 'model2_optsub_10']
+	eta = 1e-1
+	for i in range(len(file_id)):
+		test(model_no, n_train, n_test, std, eta, batch_size, epochs, verbose, plot, save, file_id[i])
 
 ################################################################################
 ################################################################################

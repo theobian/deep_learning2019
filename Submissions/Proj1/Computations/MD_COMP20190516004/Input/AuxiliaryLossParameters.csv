@@ -1,0 +1,7 @@
+ACTIVATION_FUNCTION,LOSS,WEIGHT
+None,MultiClassCrossEntropy,0.5
+None,MultiClassCrossEntropy,0.5
+None,MultiClassCrossEntropy,0.5
+None,MultiClassCrossEntropy,0.5
+None,MultiClassCrossEntropy,0.5
+None,MultiClassCrossEntropy,0.5

@@ -72,7 +72,7 @@
 %date of report: 17/05/2019
 \author{\normalsize{Th\' eophile 	\sc{Bian}} \and \normalsize{Mathias \sc{Dankl}} \and \normalsize{Samuele \sc{Mercan}}}
 \maketitle
-MODIFY FIG1
+%MODIFY FIG1
 \section{Introduction:} 
 The goal of this project is to design and implement a framework which substitutes some of the PyTorch framework's functionalities. This mini "deep-learning framework" uses some of the more basic PyTorch components such as tensor operations, but does without the forward, backward, autograd, neural modules and other functions. 
 The main task the framework should be able to achieve is to create a specific network, train it, and compute the training and testing errors.
@@ -124,13 +124,30 @@ The network is instantiated through a file named test.py, which first defines th
 %<<NEED TO ACTUALLY RUN THIS….  AND INCLUDE RESULTS – 1 graph/table is sufficient>>
 It is important to note that this series of tests is limited and is in no way exhaustive but only aims to provide a sense of the framework's ability at performing a single definite task.
 Since the performance was the main aspecct of the framework development, model hyperparameters tuning was not explored.
+\paragraph{Model Comparison:}
+\begin{figure}[H]
+	\begin{centering}
+		\includegraphics[scale=0.3]{model_subs.png}
+		\caption{Model Comparison}
+		\label{fig:model_subs}
+	\end{centering}
+\end{figure}
+\footnotesize{Parameters for all models: eta = 0.1; epochs = 100; n\_ train = 1000; n\_ test = 1000\\
+Model 1: 3 Fully Connected Layers, 25 nodes per layer, ReLU activation \\
+Model 2: 3 Fully Connected Layers, 25 nodes per layer, Tanh activation \\
+Model 3: 3 Fully Connected Layers, 50 nodes per layer, Tanh activation \\
+Model 4: 3 Fully Connected Layers, 10 nodes per layer, Tanh activation \\
+Model 5: 1 Fully Connected Layer, 20 nodes per layer, Tanh activation \\}
+
+\section{Submission} The submission file is slightly different from what is detailed here. The architecture is identical, and the code is more raw, with for example no plotting and no iteration over parameters. 
+
 
 \section{Discussion}The framework implemented remain simple enough that it can be expanded only through the creation of new classes and child classes. For instance, the implementation of a dropout feature could be done within the Linear class, by adding an attribute specifying the dropout rate. In the model's forward and backward pass methods, based on the attribute value, the dropout feature could be run/not. Similarly, for a Convolutional Layer, a whole new child class could be implemented with its own features. 
 This advantage is also an inconvenience since it creates some redundancy in the code. 
 The framework itself is limited because of the lack of different modalities implemented. It is also penalized by its explicitness and its lack of modularity.
 The most obvious examples are the training and testing methods which are implemented with respect to the classification task at hand, and with respect to the loss considered. These methods can be improved and modularized. 
 
-\section{Submission} The submission file is slightly different from what is detailed here. The architecture is identical, and the code is more raw, with for example no plotting and no iteration over parameters. 
+
 
 
 \end{document}

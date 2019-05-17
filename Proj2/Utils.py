@@ -85,7 +85,7 @@ def train(model, train_input, train_target, loss_criterion, optimizer, eta, epoc
 
 
 ################################################################################
-# def test_model_no_batch(model, test_input, test_target, loss_criterion):
+# def eval_batch(model, test_input, test_target, loss_criterion, batch_size):
 #     n_errors = 0
 #     n_correct = 0
 #     cx, cy, ix, iy = [], [], [], []
@@ -130,7 +130,6 @@ def eval(model, test_input, test_target, loss_criterion, verbose):
         i = test_input.narrow(0, s, 1)
         p = np.argmax(output)
         if(t == p):
-            n_correct += 1
             cx.append(i[0][0].item())
             cy.append(i[0][1].item())
             l.append(1)
@@ -154,8 +153,8 @@ def plot_results(ix, iy, cx, cy):
     fig, ax = plt.subplots()
     plt.scatter(ix, iy, s = 1, c = 'red', label = 'Misclassified')
     plt.scatter(cx, cy, s = 1, c = 'green', label = 'Correctly Classified')
-    circle1=plt.Circle((0,0),np.sqrt(1/(2*math.pi)), color = 'black', fill = False)
-    plt.gcf().gca().add_artist(circle1)
+    boundary = plt.Circle((0,0),np.sqrt(1/(2*math.pi)), color = 'black', fill = False)
+    plt.gcf().gca().add_artist(boundary)
     plt.ylim(-0.01, 1.1);
     plt.xlim(-0.01, 1.1);
     plt.legend(loc = 1)

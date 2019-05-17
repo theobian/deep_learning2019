@@ -1,0 +1,9 @@
+model no 2
+eta 0.1
+epochs 50
+batch size 20
+n_train 10
+n_test 10
+error train % 50.0
+error test % 40.0
+tictoc 0.5780677795410156

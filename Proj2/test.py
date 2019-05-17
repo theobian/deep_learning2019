@@ -13,6 +13,7 @@ import time
 ################################################################################
 ################################################################################
 '''
+main
 creates a dataset, a model, an optimizer, a loss criterion, with learning rate, level of layer standard deviation initialization for weights and biases, batch size
 prints losses and training/testing errors
 '''
@@ -42,7 +43,7 @@ def main():
                         Linear(25,2, std))
 
 
-    optimizer = SGD(model.param(), eta)
+    optimizer = SGDMomentum(model.param(), eta)
 
 
     loss_criterion = MSELoss()
@@ -62,10 +63,5 @@ def main():
     
 
 ################################################################################
-################################################################################
-################################################################################
-'''
-main
-'''
 if __name__ == '__main__':
     main()

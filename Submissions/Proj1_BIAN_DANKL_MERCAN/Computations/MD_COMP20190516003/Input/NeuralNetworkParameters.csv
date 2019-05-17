@@ -1,0 +1,10 @@
+#_HIDDEN_LAYERS,LOSS,OPTIMZER,LEARNING_RATE,#_EPOCHS,N_MINIBATCHSIZE
+4,BinaryCrossEntropy,Adam,0.001,200,100
+4,BinaryCrossEntropy,Adam,0.002,200,100
+4,BinaryCrossEntropy,Adam,0.005,200,100
+4,BinaryCrossEntropy,Adam,0.01,200,100
+4,BinaryCrossEntropy,Adam,0.02,200,100
+4,BinaryCrossEntropy,Adam,0.05,200,100
+4,BinaryCrossEntropy,Adam,0.1,200,100
+4,BinaryCrossEntropy,Adam,0.2,200,100
+4,BinaryCrossEntropy,Adam,0.5,200,100
